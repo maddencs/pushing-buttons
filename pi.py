@@ -17,13 +17,16 @@ def watch_buttons():
     while True:
         if red_button.is_pressed:
             requests.get(red_button_url)
+            while red_button.is_pressed:
+                continue
+            sleep(.3)
             break
         if blue_button.is_pressed:
             requests.get(blue_button_url)
+            while blue_button.is_pressed:
+                continue
+            sleep(.3)
             break
-    while red_button.is_pressed or blue_button.is_pressed:
-        continue
-    sleep(.5)
     watch_buttons()
 
 
