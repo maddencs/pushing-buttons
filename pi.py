@@ -1,10 +1,11 @@
 """
 Script for running on Raspberry Pi
 """
+from time import sleep
 import requests
 from gpiozero import Button
 
-API_URL = '<base_url>/push-button'
+API_URL = 'http://10.0.0.176:8001/buttons/push-button'
 
 red_button = Button(26)
 blue_button = Button(19)
@@ -16,8 +17,14 @@ def watch_buttons():
     while True:
         if red_button.is_pressed:
             requests.get(red_button_url)
+            break
         if blue_button.is_pressed:
             requests.get(blue_button_url)
+            break
+    while red_button.is_pressed or blue_button.is_pressed:
+        continue
+    sleep(.5)
+    watch_buttons()
 
 
 if __name__ == '__main__':
